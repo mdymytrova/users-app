@@ -1,0 +1,60 @@
+<% include partials/header %>
+
+<h1>Users page</h1>
+
+<!--Start New User form-->
+<form action="/users" method="post" class="form">
+  <input type="text" name="firstName" placeholder="First Name" required class="input-text">
+  <input type="text" name="lastName" placeholder="Last Name" required class="input-text">
+  <input type="email" name="email" placeholder="Email" required class="input-text">
+  <input type="text" name="age" placeholder="Age" required class="input-text">
+  <button type="submit" class="button button-submit">Add User</button>
+</form>
+<!--End New User form-->
+
+<!--Start All Users List -->
+<section class="userlist-container">
+  <% userlist.forEach((user) => {%>
+  <article class="user-info">
+    
+    <div class="user-contacts">
+      <h3><%= user.firstName %> <%= user.lastName %></h3>
+      <p><small>Age: <%= user.age %></small></p>
+      <p><a href="mailto:<%= user.email %>"><%= user.email %></a></p>
+    </div>
+    
+    <div class="buttons-container">
+      <form action="/users/<%= user.id%>" method="get">
+        <button type="button" class="button button-edit open-modal" data-open="<%= user.id %>">Edit</button>
+      </form>
+      
+      <form action="/users/delete/<%= user.id%>" method="post">
+        <button type="submit" class="button button-edit">Delete</button>
+      </form>
+    </div>
+  </article>
+  
+  <!--Start Modal-->
+  <div class="modal-container" data-modal="<%= user.id %>">
+    <div class="modal-overlay">
+      <div class="modal-body">
+        <button class="button button-edit close-modal" type="button" data-close="<%= user.id %>">Close</button>
+        <form action="/users/<%= user.id %>" method="post" class="form">
+          <input type="text" name="firstName" value="<%= user.firstName %>" required class="input-text">
+          <input type="text" name="lastName" value="<%= user.lastName %>" required class="input-text">
+          <input type="email" name="email" value="<%= user.email %>" required class="input-text">
+          <input type="text" name="age" value="<%= user.age %>" required class="input-text">
+          <button type="submit" class="button button-edit">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!--End Modal-->
+  
+<% }) %>
+  
+</section>
+<!--End All Users List -->
+
+
+<% include partials/footer  %>

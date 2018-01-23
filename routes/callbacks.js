@@ -21,8 +21,6 @@ callbackObject.addNewUser = (req, res) => {
     res.redirect('/users');
 };
 
-// CANNOT CHANGE NEWLY ADDED USER
-
 callbackObject.updateUser = (req, res) => {
     const userToEdit = userlist.find(user => user.id == req.params.id);
     userToEdit.firstName = req.body.firstName;
